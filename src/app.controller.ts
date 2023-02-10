@@ -30,22 +30,14 @@ export class AppController {
     const builder = new xml2js.Builder();
     return builder.buildObject(jsData);
   }
-  // @Post('/hom')
-  // async add(){
-  //   console.log('add')
-  // }
+ 
 
   @Post()
   @UseInterceptors(FilesInterceptor('files'))
   async compareXML(@UploadedFiles() files, @Res() res) {
-    console.log(files)
-    //const xml1 = readFileSync(files[0].originalname, 'utf-8');
-    const xml1 = readFileSync(files[0].originalname, 'utf-8');
-    //console.log(xml1);
-    const xml2 = readFileSync(files[1].originalname, 'utf-8');
-    const obj1 = await this.convertXMLtoJS('XML_1.xml');
+    const obj1 = await this.convertXMLtoJS(files[0].originalname);
   
-    const obj2 = await this.convertXMLtoJS('XML_2.xml');
+    const obj2 = await this.convertXMLtoJS(files[1].originalname);
 
     let result = await this.compareXML2(obj1, obj2);
 
